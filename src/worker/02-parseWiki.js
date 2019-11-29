@@ -18,6 +18,11 @@ const parseWiki = function(page, options, worker) {
     page.wiki = escapeXML(page.wiki || '');
     // options.title = options.title || page.title
     const doc = wtf(page.wiki, options);
+      let media_medium = (doc.infobox() || {})._type;
+      let medias = ['film']
+      if (options.only_media === true && !medias.includes(media_medium)){
+        return null;
+      }
     //dont insert this if it's a redirect
     if (options.skip_redirects === true && doc.isRedirect()) {
       worker.counts.redirects += 1;
@@ -53,6 +58,7 @@ const parseWiki = function(page, options, worker) {
     data.pageID = data.pageID || page.pageID;
     data._id = data._id || data.title;
     data._id = encode.encodeStr(data._id);
+    data.media_medium = media_medium;
     //create a fallback id, if none is found
     if (!data._id || data._id === true) {
       delete data._id;
