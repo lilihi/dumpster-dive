@@ -17,7 +17,8 @@ let argv = yargs
   .describe('latex', 'include latex output [false]')
   .describe('verbose', 'run in verbose mode [false]')
   .describe('verbose_skip', 'log skipped disambigs & redirects [false]')
-  .describe('workers', 'run in verbose mode [CPUCount]').argv;
+  .describe('only_media', 'filter docs to only media files [true]')
+    .describe('workers', 'run in verbose mode [CPUCount]').argv;
 
 const defaults = {
   batch_size: 500

@@ -1,6 +1,58 @@
 const wtf = require('wtf_wikipedia');
 const chalk = require('chalk');
 const encode = require('./_encode');
+const medias = [
+                "film",
+                "album",
+                "musical artist",
+                "song",
+                "television",
+                "book",
+                "writer",
+                "video game",
+                "artist",
+                "television episode",
+                "television season",
+                "animanga/video",
+                "comics character",
+                "comic book title",
+                "animanga/print",
+                "game",
+                "games",
+                "music genre",
+                "comic strip",
+                "graphic novel",
+                "vg series",
+                "comics story arc",
+                "card game",
+                "animanga character",
+                "film award",
+                "video game character",
+                "comics meta series",
+                "novel series",
+                "cardgame",
+                "webcomic",
+                "comics character and title",
+                "k-pop artist awards",
+                "award",
+                "musician awards",
+                "televison awards",
+                "british academy video games awards",
+                "awards list",
+                "books",
+                "musical",
+                "comedian",
+                "actor",
+                "director",
+                "vg",
+                "musician",
+                "video game series",
+                "fictional location",
+                "comic",
+                "book series",
+                "animanga character",
+    "character",
+"media franschise"];
 
 //doesn't support fancy things like &copy; to ©, etc
 const escapeXML = function(str) {
@@ -19,10 +71,9 @@ const parseWiki = function(page, options, worker) {
     // options.title = options.title || page.title
     const doc = wtf(page.wiki, options);
       let media_medium = (doc.infobox() || {})._type;
-      let medias = ['film']
-      if (options.only_media === true && !medias.includes(media_medium)){
+    if (options.only_media === true && !medias.includes(media_medium)){
         return null;
-      }
+    }
     //dont insert this if it's a redirect
     if (options.skip_redirects === true && doc.isRedirect()) {
       worker.counts.redirects += 1;
